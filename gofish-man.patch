@@ -1,0 +1,42 @@
+diff -u gofish-0.20.orig/dotcache.5 gofish-0.20/dotcache.5
+--- gofish-0.20.orig/dotcache.5	Fri Aug 16 22:39:25 2002
++++ gofish-0.20/dotcache.5	Sat Nov  2 14:55:00 2002
+@@ -15,7 +15,7 @@
+ The .cache file does not need to contain only the files in
+ the current directory. Any file in gopherspace, and this means
+ external as well as internal files, can be put in the .cache.
+-.SH FILE FORMAT
++.SH "FILE FORMAT"
+ .PP
+ The .cache file is an ascii text file. It is sent to the
+ client as the directory listing. This means that the .cache file must
+@@ -55,7 +55,7 @@
+ Iimage.gif	9/image.gif	domain.com	70
+ 1Directory	1/asubdir/	domain.com	70
+ .fi
+-.SH FILE TYPES
++.SH "FILE TYPES"
+ .PP
+ At a basic level GoFish only understands two types of file: text (0)
+ and binary (9). Directory specifications (1) are special in the GoFish
+@@ -74,7 +74,7 @@
+ will be processed by Netscape/IE as an html file. A binary file will
+ popup a dialog box asking if you want to save the file. An image will
+ be displayed if possible.
+-.SH FILE PERMISSIONS
++.SH "FILE PERMISSIONS"
+ .PP
+ GoFish must run as root to be able to accept connections on the
+ privileged port 70.  However, it does not need to be root to serve the
+diff -u gofish-0.20.orig/gofish.5 gofish-0.20/gofish.5
+--- gofish-0.20.orig/gofish.5	Thu Oct 24 02:36:58 2002
++++ gofish-0.20/gofish.5	Sat Nov  2 14:52:59 2002
+@@ -11,7 +11,7 @@
+ This file is also read by the
+ .B mkcache
+ program to get the root, hostname, and port entries.
+-.SH FILE FORMAT
++.SH "FILE FORMAT"
+ .PP
+ The GoFish configuration file is a simple ascii text file with option
+ = data pairs. All lines not starting in an alphabetic (a-z) character
