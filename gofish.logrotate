@@ -1,0 +1,7 @@
+/var/log/gofish/gopherd.log {
+	notifempty
+	create 640 gopher gopher
+	postrotate
+		/bin/killall -HUP gofish
+	endscript
+}
