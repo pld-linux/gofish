@@ -2,7 +2,7 @@ Summary:	A Gopher Server
 Summary(pl):	Serwer protoko³u gopher
 Name:		gofish
 Version:	0.22
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://dl.sourceforge.net/gofish/%{name}-%{version}.tar.gz
@@ -19,7 +19,8 @@ Requires(pre):	/bin/id
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires:	logrotate
-Provides:	gopherd
+Provides:	gopher-server
+Obsoletes:	gopher-server
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
