@@ -5,18 +5,20 @@ Version:	0.22
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://dl.sf.net/gofish/%{name}/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/gofish/%{name}-%{version}.tar.gz
 # Source0-md5:	d8ae50689d86344e8f279a915ed31844
 Source1:	%{name}.logrotate
 Source2:	gopherd.init
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-man.patch
 URL:		http://gofish.sourceforge.net/
-Requires:	logrotate
+BuildRequires:	autoconf
+BuildRequires:	automake
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
+Requires:	logrotate
 Provides:	gopherd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
