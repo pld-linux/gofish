@@ -1,0 +1,106 @@
+diff -u gofish-0.20.orig/Configure_GoFish gofish-0.20/Configure_GoFish
+--- gofish-0.20.orig/Configure_GoFish	Tue Sep  3 01:40:09 2002
++++ gofish-0.20/Configure_GoFish	Sat Nov  2 14:22:16 2002
+@@ -7,7 +7,7 @@
+ 
+ For the really impatient:
+ 
+-    1) Add some files and/or directories to /var/lib/gopherd
++    1) Add some files and/or directories to /home/services/gopherd
+     2) Run `mkcache -r'
+     3) Sit back and wait for the hits
+ 
+@@ -19,7 +19,7 @@
+ Links below).  The important thing to remember is that gopher is ment
+ to share files. It uses a directory structure to layout the files. The
+ root directory is the base directory that all files descend from. In
+-GoFish the root directory defaults to /var/lib/gopherd.
++GoFish the root directory defaults to /home/services/gopherd.
+ 
+ GoFish requires a special file called ".cache" in each directory you
+ want to serve files from. There is a man page provided with GoFish on
+diff -u gofish-0.20.orig/Makefile.am gofish-0.20/Makefile.am
+--- gofish-0.20.orig/Makefile.am	Sat Nov  2 07:34:43 2002
++++ gofish-0.20/Makefile.am	Sat Nov  2 14:21:56 2002
+@@ -29,7 +29,7 @@
+ 	  $(INSTALL_DATA) gofish-www.conf $(DESTDIR)$(sysconfdir)/gofish-www.conf; \
+ 	fi
+ 
+-# 1. Only install Configure_GoFish if /var/lib/gopherd does not exist.
++# 1. Only install Configure_GoFish if /home/services/gopherd does not exist.
+ #    We don't want to keep installing it for users who are upgrading.
+ # 2. Only install the .gopher+ file if it dosen't exist. We don't want to
+ #    override any user changes.
+diff -u gofish-0.20.orig/check-files gofish-0.20/check-files
+--- gofish-0.20.orig/check-files	Fri Oct  4 03:22:44 2002
++++ gofish-0.20/check-files	Sat Nov  2 14:22:03 2002
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-cd /var/lib/gopherd
++cd /home/services/gopherd
+ 
+ for cache in `find . -name .cache`; do
+   for f in `grep -v "^[19].*$" $cache | cut -f2 | cut -c3-`; do
+diff -u gofish-0.20.orig/gofish-www.conf gofish-0.20/gofish-www.conf
+--- gofish-0.20.orig/gofish-www.conf	Sun Oct 27 00:00:20 2002
++++ gofish-0.20/gofish-www.conf	Sat Nov  2 14:51:52 2002
+@@ -7,7 +7,7 @@
+ root = /home/httpd
+ 
+ # The logfile
+-logfile = /var/log/gofish.log
++logfile = /var/log/gofish/gofish.log
+ 
+ # The pidfile (used when starting/stopping the server)
+ pidfile = /var/run/gofish.pid
+diff -u gofish-0.20.orig/gofish.5 gofish-0.20/gofish.5
+--- gofish-0.20.orig/gofish.5	Thu Oct 24 02:36:58 2002
++++ gofish-0.20/gofish.5	Sat Nov  2 14:52:59 2002
+@@ -56,8 +56,8 @@
+ .SH EXAMPLE
+ .nf
+ # GoFish Gopher Server configuration file
+-root = /var/lib/gopherd
+-logfile = /var/log/gopherd
++root = /home/services/gopherd
++logfile = /var/log/gofish/gopherd.log
+ pidfile = /var/run/gopherd.pid
+ port = 70
+ uid = 13
+diff -u gofish-0.20.orig/gofish.conf gofish-0.20/gofish.conf
+--- gofish-0.20.orig/gofish.conf	Thu Oct 24 02:36:58 2002
++++ gofish-0.20/gofish.conf	Sat Nov  2 14:51:06 2002
+@@ -4,10 +4,10 @@
+ # editing a line.
+ 
+ # The root directory for the gopherspace
+-;root = /var/lib/gopherd
++;root = /home/services/gopherd
+ 
+ # The logfile
+-;logfile = /var/log/gopherd.log
++;logfile = /var/log/gofish/gopherd.log
+ 
+ # The pidfile (used when starting/stopping the server)
+ ;pidfile = /var/run/gopherd.pid
+diff -u gofish-0.20.orig/gofish.h gofish-0.20/gofish.h
+--- gofish-0.20.orig/gofish.h	Sat Nov  2 07:19:51 2002
++++ gofish-0.20/gofish.h	Sat Nov  2 14:52:17 2002
+@@ -37,8 +37,8 @@
+ 
+ // If you leave GOPHER_HOST unset, it will default to your
+ // your hostname.
+-#define GOPHER_ROOT		"/var/lib/gopherd"
+-#define GOPHER_LOGFILE	"/var/log/gopherd.log"
++#define GOPHER_ROOT		"/home/services/gopherd"
++#define GOPHER_LOGFILE	"/var/log/gofish/gopherd.log"
+ #define GOPHER_PIDFILE	"/var/run/gopherd.pid"
+ #define GOPHER_CONFIG	"/etc/gofish.conf"
+ // #define GOPHER_HOST		""
+diff -u gofish-0.20.orig/gopherd.1 gofish-0.20/gopherd.1
+--- gofish-0.20.orig/gopherd.1	Fri Aug 16 19:30:45 2002
++++ gofish-0.20/gopherd.1	Sat Nov  2 14:53:12 2002
+@@ -1 +1 @@
+-.so man1/gofish.1
++.so gofish.1
