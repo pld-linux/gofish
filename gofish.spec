@@ -98,7 +98,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gofish*
-%attr(640,root,root) %{_sysconfdir}/logrotate.d/*
+%attr(640,root,root) /etc/logrotate.d/*
 %attr(754,root,root) /etc/rc.d/init.d/gopherd
 %attr(750,gopher,gopher) /home/services/gopherd
 %attr(755,gopher,gopher) %dir /var/log/gofish
