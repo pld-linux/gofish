@@ -48,6 +48,7 @@ zmienia uprawnienia na zwyk³ego u¿ytkownika przed dostêpem do plików.
 %patch1 -p1
 
 %build
+rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
@@ -57,12 +58,15 @@ zmienia uprawnienia na zwyk³ego u¿ytkownika przed dostêpem do plików.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{logrotate.d,rc.d/init.d},/var/log/gofish}
+install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,rc.d/init.d},/var/log/gofish}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT rootdir=/home/services/gopherd
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	rootdir=/home/services/gopherd
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d
 install %{SOURCE2} $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/gopherd
+
 touch $RPM_BUILD_ROOT/var/log/gofish/{gopherd,gofish}.log
 
 %clean
@@ -90,7 +94,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog COPYING NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gofish*
