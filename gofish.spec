@@ -6,7 +6,15 @@ Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://osdn.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+Source1:	%{name}.logrotate
+Patch0:		%{name}-PLD.patch
+Patch1:		%{name}-man.patch
 URL:		http://gofish.sourceforge.net/
+Requires:	logrotate
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/bin/id
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
 Provides:	gopherd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,6 +43,8 @@ zmienia uprawnienia na zwyk³ego u¿ytkownika przed dostêpem do plików.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 %{__aclocal}
@@ -46,17 +56,45 @@ zmienia uprawnienia na zwyk³ego u¿ytkownika przed dostêpem do plików.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{/etc/logrotate.d,/var/log/gopherd}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install DESTDIR=$RPM_BUILD_ROOT rootdir=/home/services/gopherd
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d
+touch $RPM_BUILD_ROOT/var/log/gopherd/{gopherd,gofish}.log
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+if [ -n "`getgid gopher`" ]; then
+	if [ "`getgid gopher`" != "30" ]; then
+		echo "Error: group gopher doesn't have gid=30 . Correct this before installing gofish." 1>&2
+		exit 1
+	fi
+else
+	echo "Adding group gopher GID=30."
+	/usr/sbin/groupadd -g 30 gopher || exit 1
+fi
+if [ -n "`id -u gopher 2>/dev/null`" ]; then
+	if [ "`id -u gopher` != "13" ]; then
+		echo "Error: user gopher doesn't have uid=13. Correct this before installing gofish." 1>&2
+		exit 1
+	fi
+else
+	echo "Adding user gopher UID=13."
+	/usr/sbin/useradd -u 13 -g 30 -d /dev/null -s /bin/false -c "gopherd user" gopher || exit 1
+fi
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
-/var/lib/gopherd
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gofish*
+%attr(640,root,root) /etc/logrotate.d/*
+/home/services/gopherd
+%attr(755,gopher,gopher) %dir /var/log/gopherd
+%ghost /var/log/gopherd/gopherd.log
+%ghost /var/log/gopherd/gofish.log
 %{_mandir}/man[15]/*
