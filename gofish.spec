@@ -5,7 +5,7 @@ Version:	0.22
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://osdn.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+Source0:	http://dl.sf.net/gofish/%{name}/%{name}-%{version}.tar.gz
 # Source0-md5:	d8ae50689d86344e8f279a915ed31844
 Source1:	%{name}.logrotate
 Source2:	gopherd.init
