@@ -2,11 +2,12 @@ Summary:	A Gopher Server
 Summary(pl):	Serwer protoko³u gopher
 Name:		gofish
 Version:	0.20
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://osdn.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
+Source2:	gopherd.init
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-man.patch
 URL:		http://gofish.sourceforge.net/
@@ -56,12 +57,13 @@ zmienia uprawnienia na zwyk³ego u¿ytkownika przed dostêpem do plików.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/logrotate.d,/var/log/gopherd}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{logrotate.d,rc.d/init.d},/var/log/gofish}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT rootdir=/home/services/gopherd
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d
-touch $RPM_BUILD_ROOT/var/log/gopherd/{gopherd,gofish}.log
+install %{SOURCE2} $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/gopherd
+touch $RPM_BUILD_ROOT/var/log/gofish/{gopherd,gofish}.log
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -92,9 +94,10 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gofish*
-%attr(640,root,root) /etc/logrotate.d/*
-/home/services/gopherd
-%attr(755,gopher,gopher) %dir /var/log/gopherd
-%ghost /var/log/gopherd/gopherd.log
-%ghost /var/log/gopherd/gofish.log
+%attr(640,root,root) %{_sysconfdir}/logrotate.d/*
+%attr(754,root,root) %{_sysconfdir}/rc.d/init.d/gopherd
+%attr(750,gopher,gopher) /home/services/gopherd
+%attr(755,gopher,gopher) %dir /var/log/gofish
+%ghost /var/log/gofish/gopherd.log
+%ghost /var/log/gofish/gofish.log
 %{_mandir}/man[15]/*
