@@ -77,7 +77,7 @@ else
 	/usr/sbin/groupadd -g 30 gopher || exit 1
 fi
 if [ -n "`id -u gopher 2>/dev/null`" ]; then
-	if [ "`id -u gopher` != "13" ]; then
+	if [ "`id -u gopher`" != "13" ]; then
 		echo "Error: user gopher doesn't have uid=13. Correct this before installing gofish." 1>&2
 		exit 1
 	fi
