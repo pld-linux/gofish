@@ -1,8 +1,8 @@
 Summary:	A Gopher Server
 Summary(pl):	Serwer protoko³u gopher
 Name:		gofish
-Version:	0.20
-Release:	2
+Version:	0.22
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://osdn.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
