@@ -66,7 +66,7 @@ install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,rc.d/init.d},/var/log/gofish}
 	rootdir=/home/services/gopherd
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d
-install %{SOURCE2} $RPM_BUILD_ROOT//etc/rc.d/init.d/gopherd
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/gopherd
 
 touch $RPM_BUILD_ROOT/var/log/gofish/{gopherd,gofish}.log
 
