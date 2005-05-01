@@ -1,0 +1,5 @@
+- changed dirs
+- added -PLD (fixing paths) and -man (typos in manpages) patches
+- added *.logrotate
+- added %pre script
+  probably still unfinished
