@@ -85,8 +85,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gofish*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/logrotate.d/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gofish*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
 %attr(754,root,root) /etc/rc.d/init.d/gopherd
 %attr(750,gopher,gopher) /home/services/gopherd
 %attr(755,gopher,gopher) %dir /var/log/gofish
