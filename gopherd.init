@@ -28,7 +28,7 @@ case "$1" in
   start)
 	if [ ! -f /var/lock/subsys/gopherd ]; then
 		msg_starting gopherd
-		# daemon gopherd -d	# gopherd writes to terminal ... 
+		# daemon gopherd -d	# gopherd writes to terminal ...
 		busy
 		termput hpa 45
 		gopherd -d		# no error code returned even if fails
