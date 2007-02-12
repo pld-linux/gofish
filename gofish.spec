@@ -1,5 +1,5 @@
 Summary:	A Gopher Server
-Summary(pl):	Serwer protoko³u gopher
+Summary(pl.UTF-8):   Serwer protokoÅ‚u gopher
 Name:		gofish
 Version:	0.22
 Release:	4
@@ -34,17 +34,17 @@ only serve files from the root directory or below. While GoFish must
 run at root privilege to be able to use port 70, it drops to a normal
 user while accessing files.
 
-%description -l pl
-GoFish jest prostym serwerem protoko³u gopher. Zosta³ stworzony z
-my¶l± o bezpieczeñstwie i ma³ym zu¿yciu zasobów. GoFish u¿ywa
-pojedynczego procesu obs³uguj±cego wszystkie po³±czenia. Daje to ma³e
-zu¿ycie zasobów, dobre opó¼nienia (brak zmian kontekstu) oraz dobr±
-skalowalno¶æ.
+%description -l pl.UTF-8
+GoFish jest prostym serwerem protokoÅ‚u gopher. ZostaÅ‚ stworzony z
+myÅ›lÄ… o bezpieczeÅ„stwie i maÅ‚ym zuÅ¼yciu zasobÃ³w. GoFish uÅ¼ywa
+pojedynczego procesu obsÅ‚ugujÄ…cego wszystkie poÅ‚Ä…czenia. Daje to maÅ‚e
+zuÅ¼ycie zasobÃ³w, dobre opÃ³Åºnienia (brak zmian kontekstu) oraz dobrÄ…
+skalowalnoÅ›Ä‡.
 
-GoFish dzia³a w ¶rodowisku chroot(2). Oznacza to, ¿e mo¿e udostêpniaæ
-pliki tylko z w³asnego katalogu g³ównego i z wewn±trz niego. Chocia¿
-GoFish musi byæ uruchamiany z prawami roota, aby u¿yæ portu 70,
-zmienia uprawnienia na zwyk³ego u¿ytkownika przed dostêpem do plików.
+GoFish dziaÅ‚a w Å›rodowisku chroot(2). Oznacza to, Å¼e moÅ¼e udostÄ™pniaÄ‡
+pliki tylko z wÅ‚asnego katalogu gÅ‚Ã³wnego i z wewnÄ…trz niego. ChociaÅ¼
+GoFish musi byÄ‡ uruchamiany z prawami roota, aby uÅ¼yÄ‡ portu 70,
+zmienia uprawnienia na zwykÅ‚ego uÅ¼ytkownika przed dostÄ™pem do plikÃ³w.
 
 %prep
 %setup -q
