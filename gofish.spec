@@ -1,5 +1,5 @@
 Summary:	A Gopher Server
-Summary(pl.UTF-8):   Serwer protokołu gopher
+Summary(pl.UTF-8):	Serwer protokołu gopher
 Name:		gofish
 Version:	0.22
 Release:	4
