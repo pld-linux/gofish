@@ -1,4 +1,5 @@
 /var/log/gofish/*.log {
+	su gopher gopher
 	notifempty
 	create 640 gopher gopher
 	postrotate
