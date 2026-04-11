@@ -70,7 +70,10 @@ zmienia uprawnienia na zwykłego użytkownika przed dostępem do plików.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,rc.d/init.d},/var/log/gofish}
 
-%{__make} install install-root-dir \
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+%{__make} -j1 install-root-dir \
 	DESTDIR=$RPM_BUILD_ROOT
 
 # packaged as %doc
