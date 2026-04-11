@@ -28,10 +28,9 @@ diff -u gofish-0.20.orig/dotcache.5 gofish-0.20/dotcache.5
  .PP
  GoFish must run as root to be able to accept connections on the
  privileged port 70.  However, it does not need to be root to serve the
-diff -u gofish-0.20.orig/gofish.5 gofish-0.20/gofish.5
---- gofish-0.20.orig/gofish.5	Thu Oct 24 02:36:58 2002
-+++ gofish-0.20/gofish.5	Sat Nov  2 14:52:59 2002
-@@ -11,7 +11,7 @@
+--- gofish/gofish.5.orig	2026-04-11 16:24:19.976427262 +0200
++++ gofish/gofish.5	2026-04-11 16:26:37.359016329 +0200
+@@ -11,7 +11,7 @@ running two gopher servers on seperate p
  This file is also read by the
  .B mkcache
  program to get the root, hostname, and port entries.
@@ -39,4 +38,4 @@ diff -u gofish-0.20.orig/gofish.5 gofish-0.20/gofish.5
 +.SH "FILE FORMAT"
  .PP
  The GoFish configuration file is a simple ascii text file with option
- = data pairs. All lines not starting in an alphabetic (a-z) character
+ = data pairs. All lines not starting in an alphabetic (a\-z) character

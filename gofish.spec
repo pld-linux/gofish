@@ -1,17 +1,17 @@
 Summary:	A Gopher Server
 Summary(pl.UTF-8):	Serwer protokołu gopher
 Name:		gofish
-Version:	0.22
-Release:	6
-License:	GPL
+Version:	1.2
+Release:	1
+License:	GPL v2+
 Group:		Networking/Daemons
-Source0:	http://dl.sourceforge.net/gofish/%{name}-%{version}.tar.gz
-# Source0-md5:	d8ae50689d86344e8f279a915ed31844
+Source0:	https://downloads.sourceforge.net/gofish/%{name}-%{version}.tar.gz
+# Source0-md5:	a44fc268354ec97324fa25572910c412
 Source1:	%{name}.logrotate
 Source2:	gopherd.init
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-man.patch
-URL:		http://gofish.sourceforge.net/
+URL:		https://gofish.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 Requires(pre):	/bin/id
@@ -50,29 +50,34 @@ GoFish musi być uruchamiany z prawami roota, aby użyć portu 70,
 zmienia uprawnienia na zwykłego użytkownika przed dostępem do plików.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 %patch -P0 -p1
 %patch -P1 -p1
 
 %build
-rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	ac_cv_lib_nsl_gethostbyname=no \
+	ac_cv_lib_socket_socket=no \
+	--with-gopherroot=/home/services/gopherd
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,rc.d/init.d},/var/log/gofish}
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	rootdir=/home/services/gopherd
+%{__make} install install-root-dir \
+	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/gopherd
+# packaged as %doc
+%{__rm} $RPM_BUILD_ROOT/home/services/gopherd/Configure_GoFish
+
+cp -p %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/gopherd
 
 touch $RPM_BUILD_ROOT/var/log/gofish/{gopherd,gofish}.log
 
@@ -85,11 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog Configure_GoFish README TODO
 %attr(755,root,root) %{_bindir}/check-files
-%attr(755,root,root) %{_bindir}/gmap2cache
 %attr(755,root,root) %{_bindir}/mkcache
-%attr(755,root,root) %{_bindir}/webtest
 %attr(755,root,root) %{_sbindir}/gofish
 # symlink
 %{_sbindir}/gopherd
@@ -97,11 +100,15 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gofish-www.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/gofish.logrotate
 %attr(754,root,root) /etc/rc.d/init.d/gopherd
-%attr(750,gopher,gopher) /home/services/gopherd
+%attr(750,gopher,gopher) %dir /home/services/gopherd
+%ghost /home/services/gopherd/.cache
+%config(noreplace) %verify(not md5 mtime size) /home/services/gopherd/.gopher+
+%attr(750,gopher,gopher) %dir /home/services/gopherd/icons
+%config(noreplace) %verify(not md5 mtime size) /home/services/gopherd/icons/gofish.gif
+%config(noreplace) %verify(not md5 mtime size) /home/services/gopherd/icons/gopher_*.gif
 %attr(755,gopher,gopher) %dir /var/log/gofish
 %ghost /var/log/gofish/gopherd.log
 %ghost /var/log/gofish/gofish.log
-%{_mandir}/man1/gmap2cache.1*
 %{_mandir}/man1/gofish.1*
 %{_mandir}/man1/gopherd.1*
 %{_mandir}/man1/mkcache.1*
