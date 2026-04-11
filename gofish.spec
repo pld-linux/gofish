@@ -79,18 +79,29 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
 %groupadd -g 30 gopher
-%useradd -u 13 -g 30 -d /no/home -s /bin/false -c "gopherd user" gopher
+%useradd -u 13 -g 30 -d /usr/share/empty -s /bin/false -c "gopherd user" gopher
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_sbindir}/*
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gofish*
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
+%attr(755,root,root) %{_bindir}/check-files
+%attr(755,root,root) %{_bindir}/gmap2cache
+%attr(755,root,root) %{_bindir}/mkcache
+%attr(755,root,root) %{_bindir}/webtest
+%attr(755,root,root) %{_sbindir}/gofish
+# symlink
+%{_sbindir}/gopherd
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gofish.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gofish-www.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/gofish.logrotate
 %attr(754,root,root) /etc/rc.d/init.d/gopherd
 %attr(750,gopher,gopher) /home/services/gopherd
 %attr(755,gopher,gopher) %dir /var/log/gofish
 %ghost /var/log/gofish/gopherd.log
 %ghost /var/log/gofish/gofish.log
-%{_mandir}/man[15]/*
+%{_mandir}/man1/gmap2cache.1*
+%{_mandir}/man1/gofish.1*
+%{_mandir}/man1/gopherd.1*
+%{_mandir}/man1/mkcache.1*
+%{_mandir}/man5/dotcache.5*
+%{_mandir}/man5/gofish.5*
