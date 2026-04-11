@@ -20,6 +20,8 @@ Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires:	logrotate
 Provides:	gopher-server
+Provides:	group(gopher)
+Provides:	user(gopher)
 Obsoletes:	gopher-server
 Conflicts:	logrotate < 3.8.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
